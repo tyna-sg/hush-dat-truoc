@@ -1,0 +1,308 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>HUSH Đặt Trước</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Be+Vietnam+Pro:wght@400;500;600&display=swap">
+<style>
+/* Layout: một cột hẹp như tờ phiếu order buổi sáng; đội pha chế đứng đầu, menu, rồi phiếu đặt trượt lên từ đáy */
+:root{
+  --bg:#EDF0EA;        /* sương sáng */
+  --paper:#FAFBF7;
+  --ink:#1E2723;
+  --muted:#5C6862;
+  --line:#D3D9D0;
+  --accent:#27407A;    /* mực xanh như bút ghi tên lên ly */
+  --accent-ink:#FFFFFF;
+  --sun:#E7A93B;       /* nắng sớm */
+  --ok:#2F7A4F;
+  --display:"Bricolage Grotesque", "Be Vietnam Pro", system-ui, sans-serif;
+  --body:"Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141A17;--paper:#1C2420;--ink:#E8EDE7;--muted:#9AA69F;--line:#2E3833;
+  --accent:#8FA8E8;--accent-ink:#0F1A33;--sun:#F0B850;--ok:#6BC28F;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141A17;--paper:#1C2420;--ink:#E8EDE7;--muted:#9AA69F;--line:#2E3833;
+  --accent:#8FA8E8;--accent-ink:#0F1A33;--sun:#F0B850;--ok:#6BC28F;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:0 120px}
+.wrap{max-width:560px;margin:0 auto}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+header{padding-block:28px 8px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.logo{font-family:var(--display);font-weight:800;font-size:44px;letter-spacing:-.02em;line-height:1}
+.logo small{display:block;font-family:var(--body);font-weight:500;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.status{font-size:13px;font-weight:600;padding:6px 10px;border-radius:999px;background:var(--paper);border:1px solid var(--line);white-space:nowrap;display:flex;gap:6px;align-items:center}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--muted)}
+.status.open .dot{background:var(--ok)}
+.lead{font-size:17px;margin:14px 0 0;max-width:34ch}
+.sample{display:inline-block;margin-top:10px;font-size:12px;color:var(--muted);border:1px dashed var(--line);padding:3px 8px;border-radius:6px}
+
+section{margin-top:32px}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+
+/* đội pha chế */
+.crew{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.mate{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center;min-width:0}
+.face{width:56px;height:56px;border-radius:50%;margin:0 auto 8px;display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:22px;background:var(--sun);color:#2A1E05}
+.mate b{display:block;font-size:14px}
+.mate span{font-size:12px;color:var(--muted)}
+.mate.on{border-color:var(--accent)}
+.mate.on::after{content:"Đang pha";display:inline-block;margin-top:6px;font-size:11px;font-weight:600;color:var(--accent)}
+
+/* menu */
+.cat{margin-top:22px}
+.cat h3{font-size:20px;margin-bottom:6px}
+.item{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+.item:first-of-type{border-top:0}
+.item .nm{font-weight:600}
+.item .ds{font-size:13px;color:var(--muted)}
+.price{font-variant-numeric:tabular-nums;font-weight:600}
+.qty{display:flex;align-items:center;gap:8px;margin-top:6px;justify-content:flex-end}
+.qty button{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--paper);font-size:18px;line-height:1}
+.qty .add{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.qty output{min-width:18px;text-align:center;font-variant-numeric:tabular-nums;font-weight:600}
+
+/* thanh giỏ */
+.bar{position:fixed;left:0;right:0;bottom:0;padding:12px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:linear-gradient(to top,var(--bg) 70%,transparent)}
+.bar button{width:100%;max-width:560px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border:0;border-radius:16px;background:var(--accent);color:var(--accent-ink);font-weight:600;font-size:16px}
+.bar button:disabled{opacity:.45;cursor:default}
+
+/* phiếu đặt */
+.sheet{position:fixed;inset:0;background:rgba(10,14,12,.45);display:flex;align-items:flex-end;justify-content:center;z-index:20}
+.card{background:var(--paper);width:100%;max-width:600px;max-height:92%;overflow:auto;border-radius:20px 20px 0 0;
+  padding:20px max(16px,env(safe-area-inset-right,0px)) calc(20px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.card h2{font-size:24px;margin-bottom:12px}
+.line{display:flex;justify-content:space-between;gap:12px;padding:6px 0;font-variant-numeric:tabular-nums}
+.total{border-top:1px solid var(--line);margin-top:6px;padding-top:10px;font-weight:700}
+.field{display:grid;gap:6px;margin-top:14px}
+.field label{font-size:13px;font-weight:600}
+.field input,.field select,.field textarea{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit}
+.hint{font-size:12px;color:var(--muted)}
+.err{color:#B3261E;font-size:13px;min-height:1em}
+:root[data-theme="dark"] .err{color:#F2B8B5}
+.row{display:flex;gap:10px;margin-top:18px}
+.btn{flex:1;padding:14px;border-radius:12px;border:1px solid var(--line);background:var(--bg);font-weight:600;text-align:center;text-decoration:none;color:var(--ink)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.ticket{border:1.5px dashed var(--line);border-radius:14px;padding:16px;margin-top:8px;background:var(--bg)}
+.code{font-family:var(--display);font-weight:800;font-size:34px;letter-spacing:.02em}
+pre.msg{white-space:pre-wrap;font:13px/1.5 var(--body);background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px;margin:12px 0 0;user-select:all}
+.zalo{font-variant-numeric:tabular-nums;font-weight:700;user-select:all}
+footer{margin-top:40px;font-size:13px;color:var(--muted)}
+@media (prefers-reduced-motion:no-preference){.card{animation:up .22s ease-out}@keyframes up{from{transform:translateY(24px);opacity:.6}to{transform:none;opacity:1}}}
+@media (max-width:380px){.crew{grid-template-columns:repeat(2,1fr)}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="logo">HUSH<small>Cà phê mang đi · buổi sáng</small></div>
+    <div class="status" id="status"><span class="dot"></span><span id="statusText">Đang kiểm tra giờ</span></div>
+  </header>
+  <p class="lead">Đặt trước trên đường đi, tới quầy là có ly ghi sẵn tên bạn.</p>
+  <span class="sample">Tên nhân viên, số Zalo, giờ đóng đang là mẫu</span>
+
+  <section aria-labelledby="crewH">
+    <div class="eyebrow" id="crewH">Sáng nay ai pha cho bạn</div>
+    <div class="crew" id="crew"></div>
+  </section>
+
+  <section aria-labelledby="menuH">
+    <div class="eyebrow" id="menuH">Menu</div>
+    <div id="menu"></div>
+  </section>
+
+  <footer>
+    <div>Mở 7:30 – 10:30 mỗi sáng · Lấy tại quầy mặt tiền</div>
+    <div>Zalo đặt đơn: <span class="zalo" id="zaloFoot"></span></div>
+  </footer>
+</div>
+
+<div class="bar"><button id="openCart" disabled><span id="barCount">Chọn món</span><span id="barTotal"></span></button></div>
+
+<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheetH">
+  <div class="card" id="cardBody"></div>
+</div>
+
+<script>
+// ===== Cấu hình quán: thay bằng thông tin thật =====
+const SHOP = { zalo: "0900 000 000", open: "07:30", close: "10:30", slotMin: 15, prepMin: 10 };
+const CREW = [
+  { name: "Minh", note: "Pha bạc xỉu", on: true },
+  { name: "Lan", note: "Nhớ tên khách", on: true },
+  { name: "Tú", note: "Cold brew", on: false }
+];
+const MENU = [
+  { cat: "Cà phê phin", items: [
+    { id:"den", nm:"Cafe Đen SG", ds:"Black coffee · Có nóng", p:22000 },
+    { id:"sua", nm:"Cafe Sữa SG", ds:"Sữa đặc · Có nóng", p:26000 },
+    { id:"bacxiu", nm:"Bạc Xỉu", ds:"Nhiều sữa, ít cà phê · Có nóng", p:28000 },
+    { id:"kemmuoi", nm:"Cafe Kem Muối", ds:"Kem muối · Có nóng", p:30000 },
+    { id:"cotdua", nm:"Cafe Cốt Dừa", ds:"Cốt dừa · Có nóng", p:30000 },
+    { id:"hush", nm:"Cafe HUSH", ds:"Món riêng của HUSH · Có nóng", p:30000 },
+    { id:"phinsuatuoi", nm:"Phin Sữa Tươi", ds:"Sữa tươi", p:30000 }
+  ]},
+  { cat: "Cacao", items: [
+    { id:"cacaosua", nm:"Cacao Sữa", ds:"Milk cocoa · Có nóng", p:33000 },
+    { id:"cacaotrung", nm:"Cacao Kem Trứng", ds:"Egg cream · Có nóng", p:38000 },
+    { id:"cacaodua", nm:"Cacao Sữa Dừa", ds:"Coconut milk · Có nóng", p:38000 },
+    { id:"cacaomuoi", nm:"Cacao Kem Muối", ds:"Salt cream · Có nóng", p:38000 }
+  ]},
+  { cat: "Trà trái cây", items: [
+    { id:"dao", nm:"Trà Đào", ds:"Peach tea", p:35000 },
+    { id:"vai", nm:"Trà Vải", ds:"Lychee tea", p:35000 },
+    { id:"daudao", nm:"Trà Dâu Đào", ds:"Strawberry, peach", p:35000 },
+    { id:"chanhgung", nm:"Trà Chanh Gừng", ds:"Lime, ginger · Có nóng", p:33000 },
+    { id:"chanhmo", nm:"Trà Chanh Mật Ong", ds:"Lime, honey · Có nóng", p:33000 },
+    { id:"gungmo", nm:"Trà Gừng Mật Ong", ds:"Ginger, honey · Có nóng", p:33000 },
+    { id:"gungdn", nm:"Trà Gừng Đường Nâu", ds:"Ginger, brown sugar · Có nóng", p:33000 }
+  ]},
+  { cat: "Lộn xộn", items: [
+    { id:"sodachanh", nm:"Soda Chanh", ds:"Lime soda", p:33000 },
+    { id:"sodavq", nm:"Soda Việt Quất", ds:"Blueberry soda", p:33000 },
+    { id:"sodablue", nm:"Soda Blueocean", ds:"Soda", p:33000 },
+    { id:"suachua", nm:"Sữa Chua Đá", ds:"Iced yogurt", p:30000 },
+    { id:"scdau", nm:"Sữa Chua Dâu", ds:"Strawberry yogurt", p:33000 },
+    { id:"scvq", nm:"Sữa Chua Việt Quất", ds:"Blueberry yogurt", p:33000 },
+    { id:"nuocchanh", nm:"Nước Chanh", ds:"Lime juice · Có nóng", p:28000 }
+  ]},
+  { cat: "Món ăn nhẹ", items: [
+    { id:"hatdh", nm:"Hạt Hướng Dương", ds:"Sunflower seed", p:15000 },
+    { id:"myly", nm:"Mỳ Ly Xúc Xích", ds:"Cup noodle, sausage", p:18000 }
+  ]}
+];
+// ==================================================
+
+const $ = s => document.querySelector(s);
+const cart = {};
+const fmt = n => n.toLocaleString("vi-VN") + "đ";
+const allItems = MENU.flatMap(c => c.items);
+const byId = id => allItems.find(i => i.id === id);
+
+function vnNow(){ const d = new Date(); return new Date(d.getTime() + (d.getTimezoneOffset() + 420) * 60000); }
+const toMin = t => { const [h,m] = t.split(":").map(Number); return h*60+m; };
+const toHHMM = m => String(Math.floor(m/60)).padStart(2,"0") + ":" + String(m%60).padStart(2,"0");
+
+function renderStatus(){
+  const now = vnNow(), m = now.getHours()*60 + now.getMinutes();
+  const open = m >= toMin(SHOP.open) && m < toMin(SHOP.close);
+  $("#status").classList.toggle("open", open);
+  $("#statusText").textContent = open ? "Đang nhận đơn" : "Đặt trước cho sáng mai";
+}
+
+function slots(){
+  const now = vnNow(), m = now.getHours()*60 + now.getMinutes();
+  const o = toMin(SHOP.open), c = toMin(SHOP.close), out = [];
+  const today = m < c - SHOP.prepMin;
+  let start = today ? Math.max(o, Math.ceil((m + SHOP.prepMin) / SHOP.slotMin) * SHOP.slotMin) : o;
+  for (let t = start; t <= c - SHOP.slotMin; t += SHOP.slotMin) out.push((today ? "Hôm nay " : "Sáng mai ") + toHHMM(t));
+  return out;
+}
+
+function renderCrew(){
+  $("#crew").innerHTML = CREW.map(c =>
+    `<div class="mate${c.on ? " on" : ""}"><div class="face" aria-hidden="true">${c.name[0]}</div><b>${c.name}</b><span>${c.note}</span></div>`).join("");
+}
+
+function renderMenu(){
+  $("#menu").innerHTML = MENU.map(c => `<div class="cat"><h3>${c.cat}</h3>` + c.items.map(i => `
+    <div class="item">
+      <div><div class="nm">${i.nm}</div><div class="ds">${i.ds}</div></div>
+      <div><div class="price">${fmt(i.p)}</div>
+        <div class="qty">
+          <button type="button" data-act="dec" data-id="${i.id}" aria-label="Bớt ${i.nm}" ${cart[i.id] ? "" : "hidden"}>−</button>
+          <output id="q-${i.id}" ${cart[i.id] ? "" : "hidden"}>${cart[i.id] || 0}</output>
+          <button type="button" class="add" data-act="inc" data-id="${i.id}" aria-label="Thêm ${i.nm}">+</button>
+        </div></div>
+    </div>`).join("") + `</div>`).join("");
+}
+
+function totals(){
+  let n = 0, s = 0;
+  for (const id in cart){ n += cart[id]; s += cart[id] * byId(id).p; }
+  return { n, s };
+}
+
+function renderBar(){
+  const { n, s } = totals();
+  $("#openCart").disabled = n === 0;
+  $("#barCount").textContent = n ? `Xem đơn · ${n} ly` : "Chọn món";
+  $("#barTotal").textContent = n ? fmt(s) : "";
+}
+
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-act]");
+  if (!b) return;
+  const id = b.dataset.id;
+  cart[id] = (cart[id] || 0) + (b.dataset.act === "inc" ? 1 : -1);
+  if (cart[id] <= 0) delete cart[id];
+  renderMenu(); renderBar();
+});
+
+function lines(){
+  return Object.keys(cart).map(id => `<div class="line"><span>${cart[id]} × ${byId(id).nm}</span><span>${fmt(cart[id]*byId(id).p)}</span></div>`).join("");
+}
+
+function openSheet(){
+  const { s } = totals();
+  const opts = slots().map(t => `<option>${t}</option>`).join("");
+  $("#cardBody").innerHTML = `
+    <h2 id="sheetH">Đơn của bạn</h2>
+    ${lines()}
+    <div class="line total"><span>Tổng</span><span>${fmt(s)}</span></div>
+    <form id="f" novalidate>
+      <div class="field"><label for="nm">Tên ghi lên ly</label><input id="nm" autocomplete="given-name" placeholder="Ví dụ: Hà" maxlength="20"></div>
+      <div class="field"><label for="ph">Số điện thoại</label><input id="ph" type="tel" inputmode="tel" autocomplete="tel" placeholder="09xx xxx xxx"></div>
+      <div class="field"><label for="tm">Giờ tới lấy</label><select id="tm">${opts}</select><span class="hint">Pha xong trước giờ bạn chọn khoảng 2 phút</span></div>
+      <div class="field"><label for="nt">Ghi chú</label><textarea id="nt" rows="2" placeholder="Ít đá, ít ngọt..."></textarea></div>
+      <div class="err" id="err" role="alert"></div>
+      <div class="row"><button type="button" class="btn" id="back">Sửa món</button><button type="submit" class="btn pri">Xác nhận đơn</button></div>
+    </form>`;
+  $("#sheet").hidden = false;
+  $("#back").onclick = closeSheet;
+  $("#f").addEventListener("submit", submit);
+  $("#nm").focus();
+}
+function closeSheet(){ $("#sheet").hidden = true; }
+
+function submit(e){
+  e.preventDefault();
+  const nm = $("#nm").value.trim(), ph = $("#ph").value.replace(/\s/g,""), tm = $("#tm").value, nt = $("#nt").value.trim();
+  if (!nm) return $("#err").textContent = "Cho HUSH biết tên để ghi lên ly nhé.";
+  if (!/^0\d{9}$/.test(ph)) return $("#err").textContent = "Số điện thoại cần 10 số, bắt đầu bằng 0.";
+  const { s } = totals();
+  const code = "H" + tm.slice(-5).replace(":","") + "-" + ph.slice(-3);
+  const msg = [`ĐƠN HUSH ${code}`, `Tên: ${nm} · ${ph}`, `Lấy lúc: ${tm}`,
+    ...Object.keys(cart).map(id => `- ${cart[id]} × ${byId(id).nm}`),
+    nt ? `Ghi chú: ${nt}` : null, `Tổng: ${fmt(s)}`].filter(Boolean).join("\n");
+  const zaloNum = SHOP.zalo.replace(/\s/g,"");
+  $("#cardBody").innerHTML = `
+    <h2 id="sheetH">Còn một bước</h2>
+    <p>Gửi tin nhắn này qua Zalo cho HUSH. Quán trả lời xác nhận là đơn đã vào hàng.</p>
+    <div class="ticket"><div class="hint">Mã đơn</div><div class="code">${code}</div><div>${nm} · ${tm}</div>
+      <pre class="msg" id="msg">${msg.replace(/</g,"&lt;")}</pre></div>
+    <p class="hint">Zalo HUSH: <span class="zalo">${SHOP.zalo}</span></p>
+    <div class="row"><button type="button" class="btn" id="copy">Chép tin nhắn</button>
+      <a class="btn pri" href="https://zalo.me/${zaloNum}" target="_blank" rel="noopener">Mở Zalo HUSH</a></div>
+    <div class="row"><button type="button" class="btn" id="done">Đặt đơn khác</button></div>`;
+  $("#copy").onclick = async () => {
+    try { await navigator.clipboard.writeText(msg); $("#copy").textContent = "Đã chép"; }
+    catch { const r = document.createRange(); r.selectNodeContents($("#msg")); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); $("#copy").textContent = "Đã chọn, bấm giữ để chép"; }
+  };
+  $("#done").onclick = () => { for (const k in cart) delete cart[k]; closeSheet(); renderMenu(); renderBar(); };
+}
+
+$("#openCart").onclick = openSheet;
+$("#sheet").addEventListener("click", e => { if (e.target.id === "sheet") closeSheet(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheet(); });
+$("#zaloFoot").textContent = SHOP.zalo;
+renderStatus(); renderCrew(); renderMenu(); renderBar();
+setInterval(renderStatus, 60000);
+</script>
+
+</body></html>
